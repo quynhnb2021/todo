@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 class MainController extends GetxController {
   //TODO: Implement MainController
-  final tabIndex = 0.obs;
+  final tabIndex = 1.obs;
 
   @override
   void onInit() {
@@ -18,5 +18,12 @@ class MainController extends GetxController {
   void onClose() {}
   void changeTabIndex(int index) async {
     tabIndex.value = index;
+    switch (index) {
+      case 0:
+        break;
+      case 1:
+        break;
+      default:
+    }
   }
 }
