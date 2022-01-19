@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:todo/app/database/tasks_database.dart';
+import 'dart:io' show Platform;
 import 'package:todo/app/models/task_model.dart';
 import 'package:todo/app/modules/complete_task_page/controllers/complete_task_page_controller.dart';
 import 'package:todo/app/modules/incomplete_task_page/controllers/incomplete_task_page_controller.dart';
@@ -7,25 +9,13 @@ import 'package:todo/app/modules/incomplete_task_page/controllers/incomplete_tas
 class AllTaskPageController extends GetxController {
   //TODO: Implement AllTaskPageController
 
-  final tasks = [
-    // Task(name: "A1", status: true),
-    // Task(name: "A2", status: false),
-    // Task(name: "B1", status: false),
-    // Task(name: "B1", status: true),
-    // Task(name: "Ab1", status: true),
-    // Task(name: "A1", status: true),
-    // Task(name: "A2", status: false),
-    // Task(name: "B1", status: false),
-    // Task(name: "B1", status: true),
-    // Task(name: "Ab1", status: true)
-  ].obs;
+  final tasks = [].obs;
   final isChecked = false.obs;
   @override
   void onInit() async {
     super.onInit();
-
-    final data = await NotesDatabase.instance.readAllNotes();
-    if (data != null) {
+    if (!Platform.environment.containsKey('FLUTTER_TEST')) {
+      final data = await NotesDatabase.instance.readAllNotes();
       tasks.value = data;
     }
   }
@@ -53,8 +43,10 @@ class AllTaskPageController extends GetxController {
     );
 
     tasks.insert(0, task);
-    Get.find<CompleteTaskPageController>().completeTask.value = tasks.where((e) => e.status == true).toList();
-    Get.find<IncompleteTaskPageController>().inCompleteTask.value = tasks.where((e) => e.status == false).toList();
+    Get.find<CompleteTaskPageController>().completeTask.value =
+        tasks.where((e) => e.status == true).toList();
+    Get.find<IncompleteTaskPageController>().inCompleteTask.value =
+        tasks.where((e) => e.status == false).toList();
     update();
     await NotesDatabase.instance.create(task);
   }

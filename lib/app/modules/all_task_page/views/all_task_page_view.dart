@@ -6,10 +6,10 @@ import 'package:todo/app/models/task_model.dart';
 
 import '../controllers/all_task_page_controller.dart';
 
-class AllTaskPageView extends GetView<AllTaskPageController> {
+class AllTaskView extends GetView<AllTaskPageController> {
   @override
   Widget build(BuildContext context) {
-    return AllTaskPage(title: "All", nameTask: "Create task");
+    return AllTaskPage(title: "All Task", nameTask: "Create task");
   }
 }
 
@@ -36,7 +36,14 @@ class AllTaskPage extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                showDialog(context: context, builder: (context) => TextFieldAlertDialog());
+                showDialog(
+                    context: context,
+                    builder: (context) => TextFieldAlertDialog(
+                          title: "Create task",
+                          titleButton: "SUBMIT",
+                          hintText: "Wrire task here ...",
+                          toast: "Please fill task above",
+                        ));
               },
               child: Text(
                 nameTask,
@@ -48,7 +55,8 @@ class AllTaskPage extends StatelessWidget {
                 child: controller.tasks.length > 0
                     ? ListView.builder(
                         itemCount: controller.tasks.length,
-                        itemBuilder: (context, index) => allTask(controller.tasks[index]),
+                        itemBuilder: (context, index) =>
+                            allTask(controller.tasks[index]),
                       )
                     : Center(
                         child: Text(
@@ -77,7 +85,7 @@ class AllTaskPage extends StatelessWidget {
             SizedBox(
               width: 16,
             ),
-            Checkbox(value: task.status ?? false, onChanged: (bool? value) {})
+            Checkbox(value: task.status, onChanged: (bool? value) {})
           ],
         ),
       );
@@ -85,14 +93,25 @@ class AllTaskPage extends StatelessWidget {
 
 // ignore: must_be_immutable
 class TextFieldAlertDialog extends StatelessWidget {
+  TextFieldAlertDialog({
+    Key? key,
+    required this.title,
+    required this.titleButton,
+    required this.hintText,
+    required this.toast,
+  }) : super(key: key);
   TextEditingController taskTextField = TextEditingController();
   final controller = Get.find<AllTaskPageController>();
+  final String title;
+  final String titleButton;
+  final String hintText;
+  final String toast;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
 
     return AlertDialog(
-      title: const Text('Create task'),
+      title: Text(title),
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -104,7 +123,7 @@ class TextFieldAlertDialog extends StatelessWidget {
                 controller: taskTextField,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                decoration: const InputDecoration(hintText: "Wrire task here ..."),
+                decoration: InputDecoration(hintText: hintText),
               ),
             ),
           ),
@@ -122,11 +141,11 @@ class TextFieldAlertDialog extends StatelessWidget {
       ),
       actions: [
         TextButton(
-          child: const Text('SUBMIT'),
+          child: Text(titleButton),
           onPressed: () {
             if (taskTextField.text.isEmpty) {
               Fluttertoast.showToast(
-                msg: "Please fill task above",
+                msg: toast,
               );
               return;
             }

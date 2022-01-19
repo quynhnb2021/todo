@@ -7,24 +7,38 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
+import 'package:todo/app/modules/all_task_page/controllers/all_task_page_controller.dart';
+import 'package:todo/app/modules/complete_task_page/controllers/complete_task_page_controller.dart';
+import 'package:todo/app/modules/incomplete_task_page/controllers/incomplete_task_page_controller.dart';
+import 'package:todo/app/modules/main/controllers/main_controller.dart';
+import 'package:todo/app/modules/main/views/main_view.dart';
 
 import 'package:todo/main.dart';
 
+Widget createMainScreen() => MaterialApp(
+      home: MainView(),
+    );
+
 void main() {
-  // testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-  //   // Build our app and trigger a frame.
-  //   await tester.pumpWidget(const MyApp());
+  Get.put(AllTaskPageController());
+  Get.put(IncompleteTaskPageController());
+  Get.put(CompleteTaskPageController());
+  Get.lazyPut<MainController>(
+    () => MainController(),
+  );
+  testWidgets('Test widget main', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(createMainScreen());
 
-  //   // Verify that our counter starts at 0.
-  //   expect(find.text('0'), findsOneWidget);
-  //   expect(find.text('1'), findsNothing);
-
-  //   // Tap the '+' icon and trigger a frame.
-  //   await tester.tap(find.byIcon(Icons.add));
-  //   await tester.pump();
-
-  //   // Verify that our counter has incremented.
-  //   expect(find.text('0'), findsNothing);
-  //   expect(find.text('1'), findsOneWidget);
-  // });
+    // Verify that our counter starts at 0.
+    expect(find.text('All'), findsWidgets);
+    expect(find.text('Complete'), findsOneWidget);
+    expect(find.text('InComplete'), findsNothing);
+    // expect(find.byWidget(), findsOneWidget);
+    await tester.tap(find.text('All'));
+    await tester.tap(find.text('Complete'));
+    await tester.tap(find.text('Incomplete'));
+    await tester.pump();
+  });
 }

@@ -5,12 +5,31 @@ import 'package:todo/app/models/task_model.dart';
 
 import '../controllers/incomplete_task_page_controller.dart';
 
-class IncompleteTaskPageView extends GetView<IncompleteTaskPageController> {
+class IncompleteTaskView extends GetView<IncompleteTaskPageController> {
   @override
   Widget build(BuildContext context) {
+    return IncompleteTaskPage(
+      title: 'InComplete Task',
+      description: 'No data, please create the task new',
+    );
+  }
+}
+
+class IncompleteTaskPage extends StatelessWidget {
+  const IncompleteTaskPage({
+    Key? key,
+    required this.title,
+    required this.description,
+  }) : super(key: key);
+  final String title;
+  final String description;
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<IncompleteTaskPageController>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('InComplete'),
+        title: Text(title),
         centerTitle: true,
       ),
       body: Container(
@@ -26,7 +45,7 @@ class IncompleteTaskPageView extends GetView<IncompleteTaskPageController> {
               )
             : Center(
                 child: Text(
-                  'No data, please create the task new',
+                  description,
                   style: TextStyle(fontSize: 20),
                 ),
               ),
@@ -47,7 +66,7 @@ class IncompleteTaskPageView extends GetView<IncompleteTaskPageController> {
             SizedBox(
               width: 16,
             ),
-            Checkbox(value: task.status ?? false, onChanged: (bool? value) {})
+            Checkbox(value: task.status, onChanged: (bool? value) {})
           ],
         ),
       );

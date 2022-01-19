@@ -19,17 +19,17 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.ALL_TASK_PAGE,
-      page: () => AllTaskPageView(),
+      page: () => AllTaskView(),
       binding: AllTaskPageBinding(),
     ),
     GetPage(
       name: _Paths.COMPLETE_TASK_PAGE,
-      page: () => CompleteTaskPageView(),
+      page: () => CompleteTaskView(),
       binding: CompleteTaskPageBinding(),
     ),
     GetPage(
       name: _Paths.INCOMPLETE_TASK_PAGE,
-      page: () => IncompleteTaskPageView(),
+      page: () => IncompleteTaskView(),
       binding: IncompleteTaskPageBinding(),
     ),
     GetPage(

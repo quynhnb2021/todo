@@ -17,7 +17,7 @@ class MainView extends GetView<MainController> {
       body: Obx(
         () => IndexedStack(
           index: controller.tabIndex.value,
-          children: [CompleteTaskPageView(), AllTaskPageView(), IncompleteTaskPageView()],
+          children: [CompleteTaskView(), AllTaskView(), IncompleteTaskView()],
         ),
       ),
       bottomNavigationBar: Obx(

@@ -5,12 +5,31 @@ import 'package:todo/app/models/task_model.dart';
 
 import '../controllers/complete_task_page_controller.dart';
 
-class CompleteTaskPageView extends GetView<CompleteTaskPageController> {
+class CompleteTaskView extends GetView<CompleteTaskPageController> {
   @override
   Widget build(BuildContext context) {
+    return CompleteTaskPage(
+      title: 'Complete Task',
+      description: 'No data, please create the task new',
+    );
+  }
+}
+
+class CompleteTaskPage extends StatelessWidget {
+  const CompleteTaskPage({
+    Key? key,
+    required this.title,
+    required this.description,
+  }) : super(key: key);
+  final String title;
+  final String description;
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<CompleteTaskPageController>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Complete'),
+        title: Text(title),
         centerTitle: true,
       ),
       body: Container(
@@ -26,7 +45,7 @@ class CompleteTaskPageView extends GetView<CompleteTaskPageController> {
               )
             : Center(
                 child: Text(
-                  'No data, please create the task new',
+                  description,
                   style: TextStyle(fontSize: 20),
                 ),
               ),
@@ -47,7 +66,7 @@ class CompleteTaskPageView extends GetView<CompleteTaskPageController> {
             SizedBox(
               width: 16,
             ),
-            Checkbox(value: task.status ?? false, onChanged: (bool? value) {})
+            Checkbox(value: task.status, onChanged: (bool? value) {})
           ],
         ),
       );
