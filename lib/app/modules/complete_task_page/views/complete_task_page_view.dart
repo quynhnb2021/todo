@@ -41,7 +41,7 @@ class CompleteTaskPageView extends GetView<CompleteTaskPageController> {
           children: [
             Expanded(
                 child: Text(
-              task.name ?? "",
+              task.title ?? "",
               style: TextStyle(fontSize: 18),
             )),
             SizedBox(

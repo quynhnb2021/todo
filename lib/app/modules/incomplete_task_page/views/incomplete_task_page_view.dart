@@ -41,7 +41,7 @@ class IncompleteTaskPageView extends GetView<IncompleteTaskPageController> {
           children: [
             Expanded(
                 child: Text(
-              task.name ?? "",
+              task.title ?? "",
               style: TextStyle(fontSize: 18),
             )),
             SizedBox(

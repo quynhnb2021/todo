@@ -39,6 +39,8 @@ dependencies:
   google_fonts: ^2.1.0
   flutter_svg: ^0.23.0+1
   fluttertoast: ^8.0.8
+  sqflite: ^2.0.2
+  test: any
 
 dev_dependencies:
   integration_test:

@@ -20,21 +20,26 @@ class AllTaskPageView extends GetView<AllTaskPageController> {
           children: [
             GestureDetector(
               onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (context) => TextFieldAlertDialog());
+                showDialog(context: context, builder: (context) => TextFieldAlertDialog());
               },
               child: Text(
                 "Create task",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
             ),
-            Expanded(
-              child: Obx(
-                () => ListView.builder(
-                    itemCount: controller.tasks.length,
-                    itemBuilder: (context, index) =>
-                        allTask(controller.tasks[index])),
+            Obx(
+              () => Expanded(
+                child: controller.tasks.length > 0
+                    ? ListView.builder(
+                        itemCount: controller.tasks.length,
+                        itemBuilder: (context, index) => allTask(controller.tasks[index]),
+                      )
+                    : Center(
+                        child: Text(
+                          'No data, please create the task new',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
               ),
             )
           ],
@@ -50,7 +55,7 @@ class AllTaskPageView extends GetView<AllTaskPageController> {
           children: [
             Expanded(
                 child: Text(
-              task.name ?? "",
+              task.title ?? "",
               style: TextStyle(fontSize: 18),
             )),
             SizedBox(
@@ -83,8 +88,7 @@ class TextFieldAlertDialog extends StatelessWidget {
                 controller: taskTextField,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                decoration:
-                    const InputDecoration(hintText: "Wrire task here ..."),
+                decoration: const InputDecoration(hintText: "Wrire task here ..."),
               ),
             ),
           ),
