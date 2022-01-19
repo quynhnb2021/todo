@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class TaskFields {
   static final List<String> values = [
     /// Add all fields
@@ -12,13 +14,13 @@ class TaskFields {
 
 final String tableTasks = 'tasks';
 
-class Task {
+class Task extends ChangeNotifier {
   final int? id;
   final String? title;
   final bool status;
   final DateTime createdTime;
 
-  const Task({
+  Task({
     this.id,
     required this.title,
     required this.status,

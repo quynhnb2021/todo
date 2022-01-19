@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:todo/app/database/notes_database.dart';
+import 'package:todo/app/database/tasks_database.dart';
 import 'package:todo/app/models/task_model.dart';
 import 'package:todo/app/modules/complete_task_page/controllers/complete_task_page_controller.dart';
 import 'package:todo/app/modules/incomplete_task_page/controllers/incomplete_task_page_controller.dart';
@@ -23,7 +23,11 @@ class AllTaskPageController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    tasks.value = await NotesDatabase.instance.readAllNotes();
+
+    final data = await NotesDatabase.instance.readAllNotes();
+    if (data != null) {
+      tasks.value = data;
+    }
   }
 
   @override

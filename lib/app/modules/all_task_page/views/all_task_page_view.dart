@@ -9,9 +9,25 @@ import '../controllers/all_task_page_controller.dart';
 class AllTaskPageView extends GetView<AllTaskPageController> {
   @override
   Widget build(BuildContext context) {
+    return AllTaskPage(title: "All", nameTask: "Create task");
+  }
+}
+
+class AllTaskPage extends StatelessWidget {
+  const AllTaskPage({
+    Key? key,
+    required this.title,
+    required this.nameTask,
+  }) : super(key: key);
+  final String title;
+  final String nameTask;
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<AllTaskPageController>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('All'),
+        title: Text(title),
         centerTitle: true,
       ),
       body: Container(
@@ -23,7 +39,7 @@ class AllTaskPageView extends GetView<AllTaskPageController> {
                 showDialog(context: context, builder: (context) => TextFieldAlertDialog());
               },
               child: Text(
-                "Create task",
+                nameTask,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
             ),
