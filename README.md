@@ -3,6 +3,7 @@
 ## Feature
   - Create task complete or incomplete
   - Bottom navigation bar to switch between Complete Task, All Task, Incomplete Task screens 
+  - Saving and updating Todo tasks in the local database
 
 ## How to run this project ?
   - Run project using Android Studio or VSCode:
