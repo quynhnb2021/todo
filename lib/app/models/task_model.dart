@@ -17,7 +17,7 @@ final String tableTasks = 'tasks';
 class Task extends ChangeNotifier {
   final int? id;
   final String? title;
-  final bool status;
+  bool status;
   final DateTime createdTime;
 
   Task({

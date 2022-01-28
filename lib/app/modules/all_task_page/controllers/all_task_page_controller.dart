@@ -17,6 +17,7 @@ class AllTaskPageController extends GetxController {
     if (!Platform.environment.containsKey('FLUTTER_TEST')) {
       final data = await NotesDatabase.instance.readAllNotes();
       tasks.value = data;
+      updateValue();
     }
   }
 
@@ -35,6 +36,14 @@ class AllTaskPageController extends GetxController {
     isChecked.value = checked ?? false;
   }
 
+  tapTask(Task task, int index) {
+    //  final index = foods.indexWhere((element) => element.uid == food.uid)
+    task.status = !task.status;
+    tasks[index] = task;
+    updateValue();
+    update();
+  }
+
   tapSubmit(String text) async {
     final task = Task(
       title: text,
@@ -43,11 +52,15 @@ class AllTaskPageController extends GetxController {
     );
 
     tasks.insert(0, task);
+    updateValue();
+    update();
+    await NotesDatabase.instance.create(task);
+  }
+
+  updateValue() {
     Get.find<CompleteTaskPageController>().completeTask.value =
         tasks.where((e) => e.status == true).toList();
     Get.find<IncompleteTaskPageController>().inCompleteTask.value =
         tasks.where((e) => e.status == false).toList();
-    update();
-    await NotesDatabase.instance.create(task);
   }
 }

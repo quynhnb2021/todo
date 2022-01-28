@@ -56,7 +56,7 @@ class AllTaskPage extends StatelessWidget {
                     ? ListView.builder(
                         itemCount: controller.tasks.length,
                         itemBuilder: (context, index) =>
-                            allTask(controller.tasks[index]),
+                            allTask(controller.tasks[index], controller, index),
                       )
                     : Center(
                         child: Text(
@@ -72,7 +72,7 @@ class AllTaskPage extends StatelessWidget {
     );
   }
 
-  allTask(Task task) => Container(
+  allTask(Task task, AllTaskPageController controller, int index) => Container(
         margin: EdgeInsets.symmetric(vertical: 4),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,7 +85,11 @@ class AllTaskPage extends StatelessWidget {
             SizedBox(
               width: 16,
             ),
-            Checkbox(value: task.status, onChanged: (bool? value) {})
+            Checkbox(
+                value: task.status,
+                onChanged: (bool? value) {
+                  controller.tapTask(task, index);
+                })
           ],
         ),
       );
